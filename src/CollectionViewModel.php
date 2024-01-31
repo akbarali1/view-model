@@ -2,7 +2,7 @@
 
 namespace Akbarali\ViewModel;
 
-use App\Presenters\ApiResponse;
+use Akbarali\ViewModel\Presenters\ApiResponse;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
