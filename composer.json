@@ -1,9 +1,9 @@
 {
   "name":"akbarali/view-model",
-  "version":"2.2",
+  "version":"2.2.1",
   "description":"View Model PHP Laravel",
   "license":"MIT",
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "type":"library",
   "keywords":[
     "php",

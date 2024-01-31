@@ -7,6 +7,7 @@ use Akbarali\DataObject\DataObjectBase;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\App;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -97,7 +98,7 @@ abstract class BaseViewModel implements ViewModelContract
         }
 
         if (!$locale) {
-            $locale = app()->getLocale();
+            $locale = App::getLocale();
         }
 
         return $array[$locale] ?? '';

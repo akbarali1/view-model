@@ -60,21 +60,19 @@ class CollectionViewModel implements ViewModelContract
                 $row = [];
                 if (is_scalar($item)) {
                     $row = $item;
+                } elseif (is_array($item)) {
+                    foreach ($item as $itemKey => $itemVal) {
+                        $row[Str::snake($itemKey)] = is_iterable($itemVal) ? $this->toSnakeCase($itemVal) : $itemVal;
+                    }
                 } else {
-                    if (is_array($item)) {
-                        foreach ($item as $itemKey => $itemVal) {
-                            $row[Str::snake($itemKey)] = is_iterable($itemVal) ? $this->toSnakeCase($itemVal) : $itemVal;
+                    $class      = new \ReflectionClass($item);
+                    $properties = $class->getProperties(\ReflectionProperty::IS_PUBLIC);
+                    foreach ($properties as $reflectionProperty) {
+                        if ($reflectionProperty->isStatic()) {
+                            continue;
                         }
-                    } else {
-                        $class      = new \ReflectionClass($item);
-                        $properties = $class->getProperties(\ReflectionProperty::IS_PUBLIC);
-                        foreach ($properties as $reflectionProperty) {
-                            if ($reflectionProperty->isStatic()) {
-                                continue;
-                            }
-                            $value                                           = $reflectionProperty->getValue($item);
-                            $row[Str::snake($reflectionProperty->getName())] = is_iterable($value) ? $this->toSnakeCase($value) : $value;
-                        }
+                        $value                                           = $reflectionProperty->getValue($item);
+                        $row[Str::snake($reflectionProperty->getName())] = is_iterable($value) ? $this->toSnakeCase($value) : $value;
                     }
                 }
                 $res[] = $row;
