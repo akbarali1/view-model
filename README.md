@@ -1,1 +1,1 @@
-# view-model
+Dokumentatsiya endi yoziladi

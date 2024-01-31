@@ -1,0 +1,37 @@
+{
+  "name":"akbarali/view-model",
+  "version":"1.0",
+  "description":"View Model PHP Laravel",
+  "license":"MIT",
+  "minimum-stability":"stable",
+  "type":"library",
+  "keywords":[
+    "php",
+    "laravel"
+  ],
+  "autoload":{
+    "psr-4":{
+      "Akbarali\\ViewModel\\":"src/"
+    }
+  },
+  "authors":[
+    {
+      "name":"Akbarali",
+      "email":"github@akbarali.uz",
+      "homepage":"https://github.com/akbarali1"
+    }
+  ],
+  "require":{
+    "php":">=8.0",
+    "illuminate/support":">=7",
+    "illuminate/database":">=7",
+    "akbarali/data-object":">=1",
+    "illuminate/contracts": "^10.43",
+    "ramsey/uuid": "^3.9",
+    "illuminate/http": "^10.43",
+    "symfony/serializer": "^7.0"
+  },
+  "require-dev":{
+    "roave/security-advisories":"dev-latest"
+  }
+}
