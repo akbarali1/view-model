@@ -1,6 +1,6 @@
 {
   "name":"akbarali/view-model",
-  "version":"1.0",
+  "version":"1.1",
   "description":"View Model PHP Laravel",
   "license":"MIT",
   "minimum-stability": "stable",
@@ -29,7 +29,7 @@
     "illuminate/contracts": ">=8.10.0",
     "ramsey/uuid": ">=3.9",
     "illuminate/http": ">=8.10.0",
-    "symfony/serializer": "^7.0",
+    "symfony/serializer": "^v6.0.0",
     "illuminate/pagination": ">=8.10.0"
   },
   "require-dev":{
