@@ -2,8 +2,8 @@
 
 namespace Akbarali\ViewModel;
 
-use App\DataObjects\DataObjectCollection;
-use App\Presenters\ApiResponse;
+use Akbarali\DataObject\DataObjectCollection;
+use Akbarali\ViewModel\Presenters\ApiResponse;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
