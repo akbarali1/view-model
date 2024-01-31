@@ -3,7 +3,7 @@
   "version":"1.0",
   "description":"View Model PHP Laravel",
   "license":"MIT",
-  "minimum-stability":"stable",
+  "minimum-stability": "dev",
   "type":"library",
   "keywords":[
     "php",
