@@ -30,25 +30,22 @@ abstract class BaseViewModel implements ViewModelContract
     protected function init(): void
     {
         try {
-            $class = new \ReflectionClass(static::class);
-
-            $this->_fields = [];
-
-            foreach ($class->getProperties(\ReflectionProperty::IS_PUBLIC) as $reflectionProperty) {
-
-                if ($reflectionProperty->isStatic()) {
-                    continue;
+            $this->_fields = DOCache::resolve(static::class, static function () {
+                $class  = new \ReflectionClass(static::class);
+                $fields = [];
+                foreach ($class->getProperties(\ReflectionProperty::IS_PUBLIC) as $reflectionProperty) {
+                    if ($reflectionProperty->isStatic()) {
+                        continue;
+                    }
+                    $field          = $reflectionProperty->getName();
+                    $fields[$field] = $reflectionProperty;
                 }
 
-                $field = $reflectionProperty->getName();
-
-                $this->_fields[$field] = $reflectionProperty;
-            }
+                return $fields;
+            });
 
             foreach ($this->_fields as $field => $validator) {
-
-                $value = ($this->_data->{$field} ?? $validator->getDefaultValue() ?? null);
-
+                $value          = ($this->_data->{$field} ?? $validator->getDefaultValue() ?? null);
                 $this->{$field} = $value;
             }
         } catch (\Exception $exception) {
@@ -82,14 +79,13 @@ abstract class BaseViewModel implements ViewModelContract
     }
 
     /**
-     * @param      $array
-     * @param      $locale
-     * @param bool $json
+     * @param string|array $array
+     * @param ?string      $locale
      * @return string
      */
-    protected function trans($array, $locale = null, bool $json = false): string
+    protected function trans(string|array $array, ?string $locale = null): string
     {
-        if ($json === true) {
+        if (is_string($array)) {
             try {
                 $array = (array)json_decode($array, false, 512, JSON_THROW_ON_ERROR);
             } catch (\JsonException $e) {
