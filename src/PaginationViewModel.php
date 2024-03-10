@@ -27,9 +27,7 @@ class PaginationViewModel implements ViewModelContract
         $this->dataCollection = $dataCollection;
         $this->viewModel      = $viewModel;
 
-        $this->dataCollection->items->transform(function ($value) use ($viewModel) {
-            return new $viewModel($value);
-        });
+        $this->dataCollection->items->transform(fn($value) => new $viewModel($value));
 
         $parameters = (new Request)->getQueryString();
         $parameters = preg_replace('/&page(=[^&]*)?|^page(=[^&]*)?&?/', '', $parameters);
