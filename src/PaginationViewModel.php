@@ -7,7 +7,6 @@ use Akbarali\ViewModel\Presenters\ApiResponse;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 
@@ -29,9 +28,9 @@ class PaginationViewModel implements ViewModelContract
 
         $this->dataCollection->items->transform(fn($value) => new $viewModel($value));
 
-        $parameters = (new Request)->getQueryString();
+        $parameters = request()->getQueryString();
         $parameters = preg_replace('/&page(=[^&]*)?|^page(=[^&]*)?&?/', '', $parameters);
-        $path       = url((new Request)->path()).(empty($parameters) ? '' : '?'.$parameters);
+        $path       = url(request()->path()).(empty($parameters) ? '' : '?'.$parameters);
 
         $this->pagination = new LengthAwarePaginator($this->dataCollection->items, $this->dataCollection->totalCount, $this->dataCollection->limit, $this->dataCollection->page);
         $this->pagination->withPath($path);
