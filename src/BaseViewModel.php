@@ -55,9 +55,9 @@ abstract class BaseViewModel implements ViewModelContract
         $this->populate();
     }
 
-    public function toView(string $viewName, array $additionalParams = []): Factory|View|Application
+    public function toView(string $viewName, ...$args): Factory|View|Application
     {
-        return view($viewName, array_merge(['item' => $this], $additionalParams));
+        return view($viewName, array_merge(['item' => $this], $args[0] ?? []));
     }
 
     /**
