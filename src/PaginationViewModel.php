@@ -36,9 +36,9 @@ class PaginationViewModel implements ViewModelContract
         $this->pagination->withPath($path);
     }
 
-    public function toView(string $viewName, array $additionalParams = []): Factory|View|Application
+    public function toView(string $viewName, ...$args): Factory|View|Application
     {
-        return view($viewName, array_merge(['pagination' => $this->pagination, 'item' => $additionalParams]));
+        return view($viewName, array_merge(['pagination' => $this->pagination], $args[0] ?? []));
     }
 
     public function toJsonApi($toSnakeCase = true, array $additionalParams = []): ApiResponse
