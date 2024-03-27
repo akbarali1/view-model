@@ -104,4 +104,9 @@ abstract class BaseViewModel implements ViewModelContract
     {
         return new static(new EmptyData());
     }
+
+    public static function fromDataObject(DataObjectBase $data): static
+    {
+        return new static($data);
+    }
 }

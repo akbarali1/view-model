@@ -121,3 +121,9 @@ $viewModel = OrganizationViewModel::createEmpty();
 
 return $viewModel->toView('organization.store');
 ```
+
+# 1.8 version add `fromDataObject` method
+
+```php
+$viewModel = OrganizationViewModel::fromDataObject($orgData);
+```
