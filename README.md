@@ -113,3 +113,11 @@ public function edit(string $type, int $id): View
      return $viewModel->toView('organization.store', compact('type'));
 }
 ```
+
+# 1.7 version add viewmodel create empty
+
+```php
+$viewModel = OrganizationViewModel::createEmpty();
+
+return $viewModel->toView('organization.store');
+```
