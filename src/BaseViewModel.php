@@ -15,14 +15,14 @@ use Symfony\Component\Serializer\Serializer;
 
 abstract class BaseViewModel implements ViewModelContract
 {
-    protected DataObjectBase $_data;
-
     protected array $_fields = [];
 
-    public function __construct($data)
-    {
-        $this->_data = $data;
-        $this->init();
+    public function __construct(
+        protected DataObjectBase $_data
+    ) {
+        if (!($this->_data instanceof EmptyData)) {
+            $this->init();
+        }
     }
 
     abstract protected function populate();
@@ -98,5 +98,10 @@ abstract class BaseViewModel implements ViewModelContract
         }
 
         return $array[$locale] ?? '';
+    }
+
+    public static function createEmpty(): static
+    {
+        return new static(new EmptyData());
     }
 }
