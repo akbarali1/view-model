@@ -18,6 +18,7 @@ abstract class BaseViewModel implements ViewModelContract
     protected DataObjectBase $_data;
 
     protected array $_fields = [];
+    protected array $forms   = [];
 
     public function __construct($data)
     {
@@ -99,4 +100,21 @@ abstract class BaseViewModel implements ViewModelContract
 
         return $array[$locale] ?? '';
     }
+
+    /**
+     * @param ...$args
+     * @return array<string, \ReflectionProperty>
+     */
+    protected function getFields(...$args): array
+    {
+        return array_filter($this->_fields, static fn($field) => in_array($field, $args, true), ARRAY_FILTER_USE_KEY);
+    }
+
+    public function renderView(): View|Factory|Application
+    {
+        $forms = $this->forms;
+
+        return $this->toView('view-models.forms', compact('forms'));
+    }
+
 }
