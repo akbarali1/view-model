@@ -127,3 +127,86 @@ return $viewModel->toView('organization.store');
 ```php
 $viewModel = OrganizationViewModel::fromDataObject($orgData);
 ```
+# 1.9 version add `toCsv` method
+
+```php
+class PartnerData extends \Akbarali\DataObject\DataObjectBase
+{
+    public readonly int $id;
+    public readonly int $agentId;
+    public string       $fullName;
+    public string       $phone;
+    public ?string      $address;
+    public ?string      $description;
+    public Carbon       $createdAt;
+}
+
+class PartnerViewModel extends \Akbarali\ViewModel\BaseViewModel
+{
+    public ?int    $id;
+    public ?string $fullName;
+    public ?string $phone;
+    public ?string $hPhone;
+    public ?string $address;
+    public ?string $description;
+    public ?string $hDate;
+    public ?string $agentName;
+
+    protected DataObjectBase|PartnerData $_data;
+
+    protected function populate(): void
+    {
+        $this->hDate     = $this->_data->createdAt->format('d.m.Y H:i');
+        $this->agentName = $this->_data->agent->full_name ?? '';
+        $phone           = (new Phone($this->_data->phone));
+        $this->hPhone    = $phone->getFormatted();
+    }
+
+    protected static function csvData(): array
+    {
+        return [
+            'dataObject' => PartnerData::class,
+            'columns'    => [
+                "ID",
+                trans('all.full_name'),
+                trans('all.phone'),
+                trans('all.agent'),
+                trans('all.address'),
+                trans('all.description'),
+                trans('all.created_at'),
+                'Time UTC',
+            ],
+            'fields'     => [
+                'id',
+                'fullName',
+                'hPhone',
+                'agentName',
+                'address',
+                'description',
+                'hDate',
+                fn($item) => $this->_data->createdAt->format('Y-m-d H:i:s'),
+            ],
+        ];
+    }
+}
+
+final class PotentialPartnerController extends Controller
+{
+    public function index(Request $request)
+    {
+        $filters = collect();
+        $filters->push(DateFilter::getDateRangeFilter());
+        $filters->push(AgentFilter::getFilterAgentId($request->user()));
+        if ($request->get('filter') === 'export') {
+          return PartnerViewModel::toCsv($this->getExportQueryPartner($filters), 'csvData');
+        }
+    }
+    
+    public function getExportQueryPartner($filters): Builder
+    {
+        $model = PartnerModel::applyEloquentFilters($filters)->latest();
+        $model->select('partners.*');
+        return $model;
+    }
+}
+```
