@@ -127,6 +127,7 @@ return $viewModel->toView('organization.store');
 ```php
 $viewModel = OrganizationViewModel::fromDataObject($orgData);
 ```
+
 # 1.9 version add `toCsv` method
 
 ```php
@@ -210,3 +211,7 @@ final class PotentialPartnerController extends Controller
     }
 }
 ```
+
+# 2.0 version
+
+`CollectionViewModel` and `PaginationViewModel` add function `setSnakeCase`
